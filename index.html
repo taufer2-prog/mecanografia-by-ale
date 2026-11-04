@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TYPING MASTER – GALAXY EDITION by Alejandra I. Torrez Huanca</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<canvas id="stars"></canvas>
+<button class="mute sec" id="muteBtn" title="Sonido">🔊</button>
+
+<!-- ========== INICIO ========== -->
+<section class="screen active" id="s-start">
+  <div class="card">
+    <div class="rocket">🚀</div>
+    <h1>TYPING MASTER</h1>
+    <div class="sub">GALAXY EDITION · by Alejandra I. Torrez Huanca</div>
+    <p class="tag">Viaja por el universo escribiendo a la velocidad de la luz. Practica mecanografía, mide tus PPM y mejora tu precisión.</p>
+    <div class="row">
+      <button id="btnPlay">▶ COMENZAR MISIÓN</button>
+      <button class="sec" id="btnBoardStart">🏆 RANKING</button>
+    </div>
+    <p class="hint" id="bestStart"></p>
+  </div>
+</section>
+
+<!-- ========== NIVELES ========== -->
+<section class="screen" id="s-level">
+  <div class="card wide">
+    <h1 class="h-sm">ELIGE TU MISIÓN</h1>
+    <div class="levels">
+      <div class="lvl f" data-l="facil"><div class="ico">🌍</div><h3>FÁCIL</h3><p>Palabras cortas del universo · 60 s</p><div class="rec" id="rec-facil"></div></div>
+      <div class="lvl m" data-l="medio"><div class="ico">🪐</div><h3>INTERMEDIO</h3><p>Palabras largas y científicas · 60 s</p><div class="rec" id="rec-medio"></div></div>
+      <div class="lvl a" data-l="avanzado"><div class="ico">🌌</div><h3>AVANZADO</h3><p>Frases completas del cosmos · 90 s</p><div class="rec" id="rec-avanzado"></div></div>
+      <div class="lvl t" data-l="tutor"><div class="ico">🎓</div><h3>TUTOR</h3><p>Aprende dedo por dedo viajando por el sistema solar</p><div class="rec" id="rec-tutor"></div></div>
+    </div>
+    <button class="sec" id="btnBack">← Volver</button>
+  </div>
+</section>
+
+<!-- ========== JUEGO CLÁSICO ========== -->
+<section class="screen" id="s-game">
+  <div class="hud">
+    <div class="stat time" id="stTime"><b id="vTime">60</b><span>TIEMPO</span></div>
+    <div class="stat"><b id="vScore">0</b><span>PUNTOS</span></div>
+    <div class="stat"><b id="vWpm">0</b><span>PPM</span></div>
+    <div class="stat"><b id="vAcc">100%</b><span>PRECISIÓN</span></div>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="arena" id="arena">
+    <div class="combo" id="combo"></div>
+    <div class="target" id="target"></div>
+    <input id="inp" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Escribe aquí...">
+  </div>
+  <p class="hint">La palabra se completa sola al escribirla bien · <b>Enter</b> = saltar · <b>Esc</b> = terminar</p>
+</section>
+
+<!-- ========== TUTOR: MAPA DE LECCIONES ========== -->
+<section class="screen" id="s-map">
+  <div class="card wide">
+    <h1 class="h-sm">🎓 TUTOR GALÁCTICO</h1>
+    <p class="tag">Cada lección es un destino del sistema solar. Aprueba con 85 % de precisión para desbloquear el siguiente planeta.</p>
+    <div class="journey">
+      <div class="track"><i id="journeyFill"></i><span id="journeyRocket">🚀</span></div>
+      <p class="hint" id="journeyText"></p>
+    </div>
+    <div class="lessons" id="lessons"></div>
+    <button class="sec" id="btnMapBack">← Volver</button>
+  </div>
+</section>
+
+<!-- ========== TUTOR: LECCIÓN ========== -->
+<section class="screen" id="s-tutor">
+  <div class="hud">
+    <div class="stat"><b id="tLine">1/5</b><span>LÍNEA</span></div>
+    <div class="stat"><b id="tAcc">100%</b><span>PRECISIÓN</span></div>
+    <div class="stat"><b id="tErr">0</b><span>ERRORES</span></div>
+    <div class="stat"><b id="tWpm">0</b><span>PPM</span></div>
+  </div>
+  <div class="bar"><i id="tBar" style="width:0"></i></div>
+
+  <div class="arena t-arena">
+    <div id="tIntro">
+      <h2 id="tIntroTitle"></h2>
+      <p class="tag" id="tIntroDesc"></p>
+      <div class="chips" id="tIntroKeys"></div>
+      <button id="btnTutorStart">▶ EMPEZAR (Enter)</button>
+    </div>
+    <div id="tPlay" hidden>
+      <div class="tline" id="tLineText"></div>
+      <div class="tnext" id="tNext"></div>
+      <div class="tip" id="tTip"></div>
+    </div>
+  </div>
+
+  <div class="kbwrap">
+    <svg id="hands" viewBox="0 0 640 225" role="img" aria-label="Manos con la posición de los dedos"></svg>
+    <div id="kb"></div>
+  </div>
+  <button class="sec small" id="btnTutorExit">✖ Salir de la lección (Esc)</button>
+</section>
+
+<!-- ========== RESULTADOS ========== -->
+<section class="screen" id="s-end">
+  <div class="card">
+    <h1 class="h-sm" id="endTitle">MISIÓN COMPLETADA</h1>
+    <div class="rank" id="endRank"></div>
+    <div class="newrec" id="rNew" hidden>🏆 ¡NUEVO RÉCORD GALÁCTICO!</div>
+    <div class="grid" id="endGrid"></div>
+    <p class="tag note" id="endNote"></p>
+
+    <div class="savebox">
+      <label for="nameInp">✍️ Anota tu nombre para guardar tu puntaje</label>
+      <div class="saverow">
+        <input id="nameInp" type="text" maxlength="16" placeholder="Tu nombre" autocomplete="off">
+        <button id="btnSave">💾 GUARDAR</button>
+      </div>
+      <p class="hint" id="saveMsg"></p>
+    </div>
+
+    <div class="row" id="endActions"></div>
+    <div class="row"><button class="sec small" id="btnEndBoard">🏆 Ver ranking</button></div>
+  </div>
+</section>
+
+<!-- ========== RANKING ========== -->
+<section class="screen" id="s-board">
+  <div class="card wide">
+    <h1 class="h-sm">🏆 RANKING GALÁCTICO</h1>
+    <p class="tag">Puntos acumulados de todos los jugadores que han guardado su nombre en este navegador.</p>
+    <div class="tablewrap" id="boardWrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>JUGADOR</th><th>PUNTOS ACUMULADOS</th><th>PARTIDAS</th><th>MEJOR PUNTAJE</th><th>MEJOR PPM</th></tr>
+        </thead>
+        <tbody id="boardBody"></tbody>
+      </table>
+    </div>
+    <p class="hint" id="boardEmpty" hidden>Aún no hay jugadores. ¡Termina una partida y guarda tu nombre!</p>
+    <div class="row">
+      <button class="sec" id="btnBoardBack">← Volver</button>
+      <button class="sec danger" id="btnBoardClear">🗑 Borrar ranking</button>
+    </div>
+  </div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
